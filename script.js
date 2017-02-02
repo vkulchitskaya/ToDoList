@@ -19,31 +19,38 @@ var task="тест";*/
 добавь форму, которая в этот список позволит добавлять новую задачу
 
 
-
 Пишите в консоли myfunc({a: 12, b: 24}), и, о чудо, вы передали в функцию данные, введенные пользователем:)*/
 
-/*Task({name:"Суперважное дело"})
 
-
-
-
-*/
 'use strict';
 
 class Task {
-
   constructor(name) {
     this.name = name;
   }
-
   writeTask() {
     alert(this.name);
   }
-
 }
 
 var task = new Task("Текст задачи");
-task.writeTask(); // Текст задачи
+/*task.writeTask(); // Текст задачи*/
 
 
+
+
+var TaskCollection = []
+
+TaskCollection[0] = {
+	name:"Задача 1"
+}
+TaskCollection[1] = {
+	name:"Задача 2"
+}
+
+
+	
 console.log(task);
+console.log(TaskCollection);
+
+
