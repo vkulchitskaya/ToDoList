@@ -24,7 +24,7 @@ function AddTask(){
     task = new Task(Tittle);
 	alert("Задача создалась!!!");
 	console.log(task);
-}
+}	
 
 
 /*КОЛЛЕКЦИЯ ЗАДАЧ*/
@@ -38,6 +38,8 @@ TaskCollection[1] = {
 	name:"Задача 2"
 }
 
+
+console.log(TaskCollection);
 
 
 
