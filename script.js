@@ -17,27 +17,31 @@ class Task {
 
 /*ПО НАЖАТИЮ КНОПКИ НАДО СОЗДАТЬ ЭКЗЕМЛЯР ЗАДАЧИ, И ЗАСУНУТЬ ЕГО В КОЛЛЕКЦИЮ ЗАДАЧ
 НО ПОКА ЗДЕСЬ ПРОСТО ДИАЛОГОВОЕ ОКНО*/
-var Tittle,task 
+var Tittle,task,i=0,TaskCollection = []
 
 function AddTask(){
 	Tittle = document.getElementById("TaskTittle").value;
     task = new Task(Tittle);
 	alert("Задача создалась!!!");
-	console.log(task);
+	TaskCollection[i]={
+		name:Tittle
+	}
+	i=i+1;
+	console.log(TaskCollection);
+
 }	
 
 
 /*КОЛЛЕКЦИЯ ЗАДАЧ*/
-var TaskCollection = []
 
-/*В КОЛЛЕКЦИЮ ПОЛОЖИЛИ 2 ЭКЗЕМЛЯРА, КОТОРЫЕ БЫЛИ СОЗДАНЫ ЧЕРЕЗ КОД, А НЕ ЧЕРЕЗ КНОПКУ*/
+/*В КОЛЛЕКЦИЮ ПОЛОЖИЛИ 2 ЭКЗЕМЛЯРА, КОТОРЫЕ БЫЛИ СОЗДАНЫ ЧЕРЕЗ КОД, А НЕ ЧЕРЕЗ КНОПКУ
 TaskCollection[0] = {
 	name:"Задача 1"
 }
 TaskCollection[1] = {
 	name:"Задача 2"
 }
-
+*/
 
 console.log(TaskCollection);
 
