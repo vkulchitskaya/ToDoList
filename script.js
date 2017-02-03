@@ -17,12 +17,12 @@ class Task {
 
 /*ПО НАЖАТИЮ КНОПКИ НАДО СОЗДАТЬ ЭКЗЕМЛЯР ЗАДАЧИ, И ЗАСУНУТЬ ЕГО В КОЛЛЕКЦИЮ ЗАДАЧ
 НО ПОКА ЗДЕСЬ ПРОСТО ДИАЛОГОВОЕ ОКНО*/
-var Tittle,task,i=0,TaskCollection = []
+var Tittle,task,i=0,TaskCollection = [],j=0
 
 function AddTask(){
 	Tittle = document.getElementById("TaskTittle").value;
     task = new Task(Tittle);
-	alert("Задача создалась!!!");
+	/*alert("Задача создалась!!!");*/
 	TaskCollection[i]={
 		name:Tittle
 	}
@@ -30,6 +30,13 @@ function AddTask(){
 	console.log(TaskCollection);
 
 }	
+
+function RemoveTask(){
+	delete TaskCollection[j];
+	console.log(TaskCollection);
+	j=j+1;
+}
+
 
 
 /*КОЛЛЕКЦИЯ ЗАДАЧ*/
