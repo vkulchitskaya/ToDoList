@@ -42,7 +42,8 @@ class TaskCollection{
 	}
 
 	removeTaskByName(name) {
-		// ....
+		var i = this.taskCollection.indexOf(name)
+		this.taskCollection.splice(i, 1); // начиная с позиции 1, удалить 1 элемент
 	}
 
 	getTasks() {
@@ -58,7 +59,7 @@ class TaskCollection{
 
 var taskCollection = new TaskCollection();
 
-function clickButtonAdd(count){
+function clickButtonAdd(){
 	var view = new View('taskTittle','addButton','listTask');
 	var task = new Task(view.fieldValue);
 	var count =  taskCollection.length 
@@ -68,7 +69,11 @@ function clickButtonAdd(count){
 
 
 
+function clickButtonRemove(){
+	taskCollection.removeTaskByName(taskCollection.taskCollection[1].name);
+	console.log(taskCollection);
 
+}
 
 
 
