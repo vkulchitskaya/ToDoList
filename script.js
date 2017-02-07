@@ -11,32 +11,65 @@ class Task {
   }
 }
 
-/*Класс  View принимает ссылку на поле, в будущем он будет принимать ссылку на поле, ссылку на кнопку, ссылку на пустов div для отрисовки */
+
 class View{
-	constructor(idField)
-	this.fieldValue= document.getElementById(idField).value;
+	constructor(idField,idButton,idDiv){
+		this.fieldValue= document.getElementById(idField).value; /*работает */
+	}
+	display(taskCollection){
+		/*тут отрисовывается коллекция в пустом div*/
+		var tasks = taskCollection.getTasks();
+		tasks.forEach(function(item, i, arr) {
+
+		})
+	}
 }
 
 
 class TaskCollection{
+
+	constructor() {
+		this.taskCollection = [];
+	}
+	
+
 	addTask(task){
-		/*тут должно быть добавление задачи, как в массив объектов, но не могу разобраться какой индекс использовать,
-		может использовать свойства поиска длины массива. Но как интерпретатор поймет, что мой класс является массивом объектов */
+		this.taskCollection.push(task); 
+	}
+
+	removeTask(task) {
+		this.removeTaskByName(task.name);
+	}
+
+	removeTaskByName(name) {
+		// ....
+	}
+
+	getTasks() {
+		return this.taskCollection;
 	}
 }
 	
+	
 
-function clickButtonAdd(){
-	task=createTask();
-	addTask(task);
+
+
+
+
+var taskCollection = new TaskCollection();
+
+function clickButtonAdd(count){
+	var view = new View('taskTittle','addButton','listTask');
+	var task = new Task(view.fieldValue);
+	var count =  taskCollection.length 
+	taskCollection.addTask(task); 
+	console.log(taskCollection);
 }
 
 
 
 
-view = new View('taskTittle');
-task = new Task(view.fieldValue);
-taskCollection = new TaskCollection ;
+
 
 
 /*ФУНКЦИЯ СОЗДАНИЯ ЗАДАЧИ, ВОЗВРАЩАЕТ ЗАДАЧУ*/
@@ -49,12 +82,9 @@ taskCollection = new TaskCollection ;
 
 
 
-
-
 /*если хочешь удалить - используюй splice
 еще лучше - добавить в класс массива свою функцию
 Array.prototype.removeAt = function (index) {
   this.splice(index,1);
 };
 */
-
