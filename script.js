@@ -25,21 +25,14 @@ class View{
  	    tasks.forEach(function(item, i, arr) {
 		    })*/
 		
-		var newLi = document.createElement('li');
-
-    /*ВОТ ЭТА КОНСТРУКЦИЯ ОТРИСОВЫВАЕТ ТОЛЬКО ПОСЛЕДНИЙ ЭЛЕМЕНТ КОЛЛЕКЦИИ*/
+    /*ЗАРАБОТАЛО, НО МНЕ НЕ НРАВИТСЯ КОНСТУРКЦИЯ*/
    		
-   		/*for (var i = 0; i < taskCollection.taskCollection.length; i++) {
-   			newP.innerHTML =taskCollection.taskCollection[i].name;
-			listTask.appendChild(newP);
+   		for (var i = 0; i < taskCollection.taskCollection.length; i++) {
+   			var newLi = document.createElement('li');
+   			newLi.innerHTML =taskCollection.taskCollection[i].name;
+			listTask.appendChild(newLi);
 
-		}*/
-
-    /*ПОПЫТАЛАСЬ НА СТРАНИЦУ ВЫВЕСТИ 9 РАЗ ПОДРЯД ТЕСТ, НО ВЫВОДИТСЯ ТОЛЬКО ПО 1 РАЗУ ЗА НАЖАТИЕ*/
-   		for (var i = 0; i < 9; i++) {
-   			newLi.innerHTML ='test';
-			listTask.appendChild(newLi);	
-		}		
+		}
 
 	}
 }
