@@ -39,29 +39,32 @@ class TaskCollection{
 
 
 class View{
-	constructor(idField,idButton,idDiv){
-		this.fieldValue= document.getElementById(idField).value; /*работает */
-		this.listValue= document.getElementById(idDiv);
+	constructor(idField,idButton,idUl){
+		this.idField=document.getElementById(idField);
+		this.idButton=document.getElementById(idButton);
+		this.idUl=document.getElementById(idUl);
 	}
 	display(taskCollection){
 	    var tasks = taskCollection.getTasks();
 	    self = this
  	    tasks.forEach(function (item) {
 		var newLi = document.createElement('li');
-   		newLi.innerHTML =item.name;
-   		self.listValue.appendChild(newLi);
-   		console.log(self.listValue);
+   		newLi.innerHTML=item.name;
+   		self.idUl.appendChild(newLi);
+   		console.log(self.idUl);
 	});		
 	}
+	getFieldValue(){
+		var fieldValue = document.getElementById(this.idField).value;
+		return fieldValue;
+	}
+
 }
 
 
 
-
-
 function clickButtonAdd(){
-	var view = new View('taskTittle','addButton','listTask');
-	var task = new Task(view.fieldValue);
+	var task = new Task(view.getFieldValue());
 	taskCollection.addTask(task); 
 	console.log(taskCollection);
 	
@@ -78,9 +81,8 @@ function clickButtonRemove(){
 
 
 function clickButtonDisplay(){
-	var view = new View('taskTittle','addButton','listTask');
 	view.display(taskCollection);
 }
 
-/*var view = new View('taskTittle','addButton','listTask');*/
+var view = new View('taskTittle','addButton','listTask');
 var taskCollection = new TaskCollection();
