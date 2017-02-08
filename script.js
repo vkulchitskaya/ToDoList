@@ -41,14 +41,15 @@ class TaskCollection{
 class View{
 	constructor(idField,idButton,idDiv){
 		this.fieldValue= document.getElementById(idField).value; /*работает */
-		/*this.listValue= document.getElementById(idDiv).value;*/
+		this.listValue= document.getElementById(idDiv);
 	}
 	display(taskCollection){
 	    var tasks = taskCollection.getTasks();
- 	    tasks.forEach(function (item, i, arr) {
+ 	    tasks.forEach(function (item) {
 		var newLi = document.createElement('li');
    		newLi.innerHTML =item.name;
-   		listTask.appendChild(newLi);
+   		listValue.appendChild(newLi);
+   		console.log(this.listValue);
 	});		
 	}
 }
