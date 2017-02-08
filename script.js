@@ -12,32 +12,6 @@ class Task {
 }
 
 
-class View{
-	constructor(idField,idButton,idDiv){
-		this.fieldValue= document.getElementById(idField).value; /*работает */
-	}
-	display(taskCollection){
-	
-	/* НЕ РАЗОБРАЛАСЬ В ЭТОМ МЕТОДЕ РЕШИЛА НАПИСАТЬ ПО-СВОЕМУ*/
-
-	    /*тут отрисовывается коллекция в пустом div*/
-	    /*var tasks = taskCollection.getTasks();
- 	    tasks.forEach(function(item, i, arr) {
-		    })*/
-		
-    /*ЗАРАБОТАЛО, НО МНЕ НЕ НРАВИТСЯ КОНСТУРКЦИЯ*/
-   		
-   		for (var i = 0; i < taskCollection.taskCollection.length; i++) {
-   			var newLi = document.createElement('li');
-   			newLi.innerHTML =taskCollection.taskCollection[i].name;
-			listTask.appendChild(newLi);
-
-		}
-
-	}
-}
-
-
 class TaskCollection{
 
 	constructor() {
@@ -62,11 +36,25 @@ class TaskCollection{
 		return this.taskCollection;
 	}
 }
-	
-	
 
 
-var taskCollection = new TaskCollection();
+class View{
+	constructor(idField,idButton,idDiv){
+		this.fieldValue= document.getElementById(idField).value; /*работает */
+	}
+	display(taskCollection){
+	    var tasks = taskCollection.getTasks();
+ 	    tasks.forEach(printCollection);		
+	}
+}
+
+function printCollection(item, i, arr) {
+	var newLi = document.createElement('li');
+   	newLi.innerHTML =arr[i].name;
+   	listTask.appendChild(newLi);
+}
+
+
 
 function clickButtonAdd(){
 	var view = new View('taskTittle','addButton','listTask');
@@ -75,7 +63,6 @@ function clickButtonAdd(){
 	console.log(taskCollection);
 	
 }
-
 
 
 function clickButtonRemove(){
@@ -91,3 +78,5 @@ function clickButtonDisplay(){
 	var view = new View('taskTittle','addButton','listTask');
 	view.display(taskCollection);
 }
+
+var taskCollection = new TaskCollection();
