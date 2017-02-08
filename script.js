@@ -17,11 +17,30 @@ class View{
 		this.fieldValue= document.getElementById(idField).value; /*работает */
 	}
 	display(taskCollection){
-		/*тут отрисовывается коллекция в пустом div*/
-		var tasks = taskCollection.getTasks();
-		tasks.forEach(function(item, i, arr) {
+	
+	/* НЕ РАЗОБРАЛАСЬ В ЭТОМ МЕТОДЕ РЕШИЛА НАПИСАТЬ ПО-СВОЕМУ*/
 
-		})
+	    /*тут отрисовывается коллекция в пустом div*/
+	    /*var tasks = taskCollection.getTasks();
+ 	    tasks.forEach(function(item, i, arr) {
+		    })*/
+		
+		var newLi = document.createElement('li');
+
+    /*ВОТ ЭТА КОНСТРУКЦИЯ ОТРИСОВЫВАЕТ ТОЛЬКО ПОСЛЕДНИЙ ЭЛЕМЕНТ КОЛЛЕКЦИИ*/
+   		
+   		/*for (var i = 0; i < taskCollection.taskCollection.length; i++) {
+   			newP.innerHTML =taskCollection.taskCollection[i].name;
+			listTask.appendChild(newP);
+
+		}*/
+
+    /*ПОПЫТАЛАСЬ НА СТРАНИЦУ ВЫВЕСТИ 9 РАЗ ПОДРЯД ТЕСТ, НО ВЫВОДИТСЯ ТОЛЬКО ПО 1 РАЗУ ЗА НАЖАТИЕ*/
+   		for (var i = 0; i < 9; i++) {
+   			newLi.innerHTML ='test';
+			listTask.appendChild(newLi);	
+		}		
+
 	}
 }
 
@@ -54,42 +73,28 @@ class TaskCollection{
 	
 
 
-
-
-
 var taskCollection = new TaskCollection();
 
 function clickButtonAdd(){
 	var view = new View('taskTittle','addButton','listTask');
 	var task = new Task(view.fieldValue);
-	var count =  taskCollection.length 
 	taskCollection.addTask(task); 
 	console.log(taskCollection);
+	
 }
 
 
 
 function clickButtonRemove(){
-	taskCollection.removeTaskByName(taskCollection.taskCollection[1].name);
+	var count =  taskCollection.taskCollection.length 
+	count = count-1
+	if (count > -1) taskCollection.removeTaskByName(taskCollection.taskCollection[count].name);
 	console.log(taskCollection);
 
 }
 
 
-
-/*ФУНКЦИЯ СОЗДАНИЯ ЗАДАЧИ, ВОЗВРАЩАЕТ ЗАДАЧУ*/
-
-/*function createTask(title){	
-	task = new Task(tittle);
-	return task;
+function clickButtonDisplay(){
+	var view = new View('taskTittle','addButton','listTask');
+	view.display(taskCollection);
 }
-*/
-
-
-
-/*если хочешь удалить - используюй splice
-еще лучше - добавить в класс массива свою функцию
-Array.prototype.removeAt = function (index) {
-  this.splice(index,1);
-};
-*/
