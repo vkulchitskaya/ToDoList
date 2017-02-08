@@ -39,21 +39,27 @@ class TaskCollection{
 
 
 class View{
+
+	/*ЭКЗЕМЛЯР ХРАНИТ В СЕБЕ 3 ССЫЛКИ : ПОЛЕ, КНОПКА, СПИСОК*/
 	constructor(idField,idButton,idUl){
 		this.idField=document.getElementById(idField);
 		this.idButton=document.getElementById(idButton);
 		this.idUl=document.getElementById(idUl);
 	}
+
+	/**/
 	display(taskCollection){
-	    var tasks = taskCollection.getTasks();
+	    var tasks = Application.taskCollection.getTasks(); // СОЗДАЕТ МАССИВ ЗАДАЧ ИЗ ЭКЗАМЛЯРА ПРИЛОЖЕНИЯ
 	    self = this
- 	    tasks.forEach(function (item) {
-		var newLi = document.createElement('li');
-   		newLi.innerHTML=item.name;
-   		self.idUl.appendChild(newLi);
-   		console.log(self.idUl);
-	});		
+
+ 	    tasks.forEach(function (item) { //ДЛЯ КАЖДОЙ ЯЧЕЙКИ МАССИВА ПРИМЕНЯЕМ ФУНКЦИЮ
+			var newLi = document.createElement('li'); //СОЗДАЕМ ПУНКТ СПИСКА
+   			newLi.innerHTML=item.name; // ПРОПИСЫВАЕМ В LI НАЗВАНИЕ ЗАДАЧИ
+   			self.idUl.appendChild(newLi); // ДОБАВЛЯЕМ LI ВНТУРЬ UL
+	});
 	}
+
+	/*ВОЗВРАЩАЕТ ИМЯ ЗАДАЧИ ИЗ ПОЛЯ*/
 	getFieldValue(){
 		var fieldValue = document.getElementById(this.idField).value;
 		return fieldValue;
@@ -63,26 +69,34 @@ class View{
 
 
 
-function clickButtonAdd(){
-	var task = new Task(view.getFieldValue());
-	taskCollection.addTask(task); 
-	console.log(taskCollection);
-	
+class Application{
+
+	/*ЭКЗЕМЛЯР ХРАНИТ В СЕБЕ VIEW И КОЛЛЕКЦИЮ ЗАДАЧ*/
+	constructor(){
+		this.view = new View('taskTittle','addButton','listTask');
+		this.taskCollection = new TaskCollection();
+	}
+
+	/*ВОЗВРАЩАЕТ ЭКЗЕМЛЯР VIEW*/
+	getView(){
+		return this.view;
+	}
+
+	/*ДОБАВЛЯЕТ ЗАДАЧУ В КОЛЛЕКЦИЮ ЗАДАЧ*/
+	clickButtonAdd(){
+		var task = new Task(view.getFieldValue());
+		this.taskCollection.addTask(task); 
+	}
+
+	/*ОТРИСОВЫВАЕТ СПИСОК ЗАДАЧ*/
+	clickButtonDisplay(){
+		view.display(taskCollection);
+	}
+
+	/*УДАЛЯЕТ ТОЛЬКО ПЕРВУЮ ЗАДАЧУ*/
+    clickButtonRemove(){
+		this.taskCollection.removeTaskByName(taskCollection.taskCollection[0].name);
+	}
 }
 
 
-function clickButtonRemove(){
-	var count =  taskCollection.taskCollection.length 
-	count = count-1
-	if (count > -1) taskCollection.removeTaskByName(taskCollection.taskCollection[count].name);
-	console.log(taskCollection);
-
-}
-
-
-function clickButtonDisplay(){
-	view.display(taskCollection);
-}
-
-var view = new View('taskTittle','addButton','listTask');
-var taskCollection = new TaskCollection();
