@@ -45,11 +45,12 @@ class View{
 	}
 	display(taskCollection){
 	    var tasks = taskCollection.getTasks();
+	    self = this
  	    tasks.forEach(function (item) {
 		var newLi = document.createElement('li');
    		newLi.innerHTML =item.name;
-   		listValue.appendChild(newLi);
-   		console.log(this.listValue);
+   		self.listValue.appendChild(newLi);
+   		console.log(self.listValue);
 	});		
 	}
 }
@@ -81,4 +82,5 @@ function clickButtonDisplay(){
 	view.display(taskCollection);
 }
 
+/*var view = new View('taskTittle','addButton','listTask');*/
 var taskCollection = new TaskCollection();
