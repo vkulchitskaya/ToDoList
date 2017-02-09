@@ -17,21 +17,16 @@ class TaskCollection{
 	constructor() {
 		this.taskCollection = [];
 	}
-	
-
 	addTask(task){
 		this.taskCollection.push(task); 
 	}
-
 	removeTask(task) {
 		this.removeTaskByName(task.name);
 	}
-
 	removeTaskByName(name) {
 		var i = this.taskCollection.indexOf(name)
 		this.taskCollection.splice(i, 1); // начиная с позиции 1, удалить 1 элемент
 	}
-
 	getTasks() {
 		return this.taskCollection;
 	}
@@ -41,14 +36,15 @@ class TaskCollection{
 class View{
 
 	/*ЭКЗЕМЛЯР ХРАНИТ В СЕБЕ 3 ССЫЛКИ : ПОЛЕ, КНОПКА, СПИСОК*/
-	constructor(idField,idButton,idUl){
+	constructor(idField,idButton,idButtonDis,idUl){
 		this.idField=document.getElementById(idField);
 		this.idButton=document.getElementById(idButton);
+		this.idButtonDis=document.getElementById(idButtonDis);
 		this.idUl=document.getElementById(idUl);
 	}
 
-	/**/
-	display(taskCollection){
+	/*
+	this.idButtonDis.onclick = display(taskCollection){
 	    var tasks = Application.taskCollection.getTasks(); // СОЗДАЕТ МАССИВ ЗАДАЧ ИЗ ЭКЗАМЛЯРА ПРИЛОЖЕНИЯ
 	    self = this
 
@@ -57,13 +53,14 @@ class View{
    			newLi.innerHTML=item.name; // ПРОПИСЫВАЕМ В LI НАЗВАНИЕ ЗАДАЧИ
    			self.idUl.appendChild(newLi); // ДОБАВЛЯЕМ LI ВНТУРЬ UL
 	});
-	}
+	}*/
 
 	/*ВОЗВРАЩАЕТ ИМЯ ЗАДАЧИ ИЗ ПОЛЯ*/
 	getFieldValue(){
-		var fieldValue = document.getElementById(this.idField).value;
-		return fieldValue;
+		return this.idField.value;
 	}
+
+
 
 }
 
@@ -73,7 +70,7 @@ class Application{
 
 	/*ЭКЗЕМЛЯР ХРАНИТ В СЕБЕ VIEW И КОЛЛЕКЦИЮ ЗАДАЧ*/
 	constructor(){
-		this.view = new View('taskTittle','addButton','listTask');
+		this.view = new View('taskTittle','addButton','displayButton','listTask');
 		this.taskCollection = new TaskCollection();
 	}
 
@@ -82,10 +79,14 @@ class Application{
 		return this.view;
 	}
 
+
 	/*ДОБАВЛЯЕТ ЗАДАЧУ В КОЛЛЕКЦИЮ ЗАДАЧ*/
-	clickButtonAdd(){
-		var task = new Task(view.getFieldValue());
-		this.taskCollection.addTask(task); 
+	this.view.idButton.onclick = clickButtonAdd(){
+		/*var task = new Task(view.getFieldValue());
+		this.taskCollection.addTask(task);*/ 
+
+		console.log(view);
+		console.log(taskCollection);
 	}
 
 	/*ОТРИСОВЫВАЕТ СПИСОК ЗАДАЧ*/
@@ -100,3 +101,4 @@ class Application{
 }
 
 
+var аplication = new Application();
