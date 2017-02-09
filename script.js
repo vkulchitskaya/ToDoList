@@ -41,6 +41,10 @@ class View{
 		this.idButton=document.getElementById(idButton);
 		this.idButtonDis=document.getElementById(idButtonDis);
 		this.idUl=document.getElementById(idUl);
+		/*this.idButton.onclick = function(){
+		var task = new Task(this.idField.value);
+		/*this.taskCollection.addTask(task); 
+		console.log(this);
 	}
 
 	/*
@@ -55,14 +59,16 @@ class View{
 	});
 	}*/
 
-	/*ВОЗВРАЩАЕТ ИМЯ ЗАДАЧИ ИЗ ПОЛЯ*/
-	getFieldValue(){
+	/*ВОЗВРАЩАЕТ ИМЯ ЗАДАЧИ ИЗ ПОЛЯ
+		getFieldValue(){
 		return this.idField.value;
 	}
 
-
+*/
 
 }
+}
+
 
 
 
@@ -81,24 +87,25 @@ class Application{
 
 
 	/*ДОБАВЛЯЕТ ЗАДАЧУ В КОЛЛЕКЦИЮ ЗАДАЧ*/
-	this.view.idButton.onclick = clickButtonAdd(){
+	/*vthis.view.idButton.onclick = clickButtonAdd(){
 		/*var task = new Task(view.getFieldValue());
-		this.taskCollection.addTask(task);*/ 
-
+		this.taskCollection.addTask(task);
 		console.log(view);
 		console.log(taskCollection);
-	}
+	}*/ 
 
-	/*ОТРИСОВЫВАЕТ СПИСОК ЗАДАЧ*/
+	/*ОТРИСОВЫВАЕТ СПИСОК ЗАДАЧ*
 	clickButtonDisplay(){
 		view.display(taskCollection);
 	}
 
-	/*УДАЛЯЕТ ТОЛЬКО ПЕРВУЮ ЗАДАЧУ*/
+	/*УДАЛЯЕТ ТОЛЬКО ПЕРВУЮ ЗАДАЧУ
     clickButtonRemove(){
 		this.taskCollection.removeTaskByName(taskCollection.taskCollection[0].name);
 	}
+	*/
 }
 
 
-var аplication = new Application();
+var application = new Application();
+console.log(application);
