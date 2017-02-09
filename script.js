@@ -32,7 +32,8 @@ class TaskCollection{
 
 
 class View{
-	constructor(idField,idButton,idButtonDis,idUl){
+	
+	constructor(idField,idButton,idButtonDis,idUl,taskCollection){
 		this.idField=document.getElementById(idField);
 		this.idButton=document.getElementById(idButton);
 		this.idButtonDis=document.getElementById(idButtonDis);
@@ -40,16 +41,18 @@ class View{
 		this.idButton.onclick = function(){
 			var fieldValue = document.getElementById(idField).value;
 			var task = new Task(fieldValue);
-			/*нажатие кнопки создает задачу, но не знаю, как положить эту задачу в коллекцию*/
-			/*application.taskCollection.addTask(task);*/
+			taskCollection.addTask(task);}
+		this.idButtonDis.onclick = function(){
+			console.log(taskCollection);}
+
 		}
-		}
+
 }
 
 class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
-		this.view = new View('taskTittle','addButton','displayButton','listTask');		
+		this.view = new View('taskTittle','addButton','displayButton','listTask', this.taskCollection);		
 	}
 }
 
@@ -58,3 +61,5 @@ window.onload = function(){
 var application = new Application();
 console.log(application);
 };
+
+
