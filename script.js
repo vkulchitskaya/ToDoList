@@ -49,18 +49,31 @@ class View{
 
 }
 
-class Application{
+/*class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
 		this.view = new View('taskTittle','addButton','displayButton','listTask', this.taskCollection);		
 	}
 }
 
-
 window.onload = function(){
 var application = new Application();
 console.log(application);
+};*/
+
+
+window.onload = function(){
+var taskCollection = new TaskCollection();
+var view = new View(); /*ДОПИСАТЬ ПАРАЕМЕНТРЫ!!!!!!*/
+var controller = new Controller(view,taskCollection);
+console.log(controller);
 };
 
 
 
+class Controller{
+	constructor(view,taskCollection){
+		this.taskCollection = taskCollection;
+		this.view = view;
+	}
+}
