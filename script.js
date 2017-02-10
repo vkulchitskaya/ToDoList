@@ -1,3 +1,5 @@
+/*MODEL.JS***********************************/
+
 class Task {
   constructor(name) {
     this.name = name;
@@ -26,29 +28,61 @@ class TaskCollection{
 		return this.taskCollection;
 	}
 }
+/*END MODEL.JS******************************************/
 
 
 
+/*VIEW.JS***********************************************/
 class View{
 	
 	constructor(idField,idButton,idButtonDis,idUl/*,taskCollection*/){
-		this.idField=document.getElementById(idField);
-		this.idButton=document.getElementById(idButton);
-		this.idButtonDis=document.getElementById(idButtonDis);
-		this.idFieldValue=document.getElementById(idField).value;
-		this.idUl=document.getElementById(idUl);
-		this.idButton.onclick = function(){
-			var fieldValue = document.getElementById(idField).value;
-			var task = new Task(fieldValue);
-			/*taskCollection.addTask(task);*/}
-		this.idButtonDis.onclick = function(){
-			/*console.log(taskCollection);*/}
+		this.idField=getElem(idField);
+		this.idButton=getElem(idButton);
+		this.idButtonDis=getElem(idButtonDis);
+		this.idFieldValue=getElem(idField).value;
+		this.idUl=getElem(idUl);	
+		this.StrIdField=idField;
 		}
-		getFieldValue(){
-			return document.getElementById(idField).value;
+		
+		
+}
+/* END VIEW.JS**********************************/
+
+
+/*HELPERS.JS***********************************/
+
+function getElem(id)
+		{
+			return document.getElementById(id);
+		}
+function getFieldValue(view){
+			return view.idField.value;
+		}		
+/*END HELPERS.JS********************************/
+
+
+/*CONTROLLER.JS*********************************/
+class Controller{
+	constructor(view,taskCollection){
+		this.view = view;
+		this.taskCollection = taskCollection;
+		this.view.idButton.onclick = function(){
+			self=this
+			var fieldValue = getElem(view.StrIdField).value;
+			var task = new Task(fieldValue);
+			taskCollection.addTask(task);
+			console.log(taskCollection);
+		     }
+		this.view.idButtonDis.onclick = function(){
+			/*console.log(taskCollection);*/}     
 		}
 }
 
+/*END CONTROLLER.JS*****************************/
+
+
+
+/*НЕ ЗНАЮ К КАКОМУ ФАЙЛУ ОТНЕСТИ КОД НИЖЕ.JS****/
 class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
@@ -57,18 +91,11 @@ class Application{
 	}
 }
 
-class Controller{
-	constructor(view,taskCollection){
-		}
-	}
 
 
 window.onload = function(){
-
 var application = new Application();
 console.log(application);
-
 };
 
-
-
+/*********************************************/
