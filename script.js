@@ -64,7 +64,7 @@ console.log(application);
 
 window.onload = function(){
 var taskCollection = new TaskCollection();
-var view = new View(); /*ДОПИСАТЬ ПАРАЕМЕНТРЫ!!!!!!*/
+var view = new View('taskTittle','addButton','displayButton','listTask', taskCollection);
 var controller = new Controller(view,taskCollection);
 console.log(controller);
 };
