@@ -54,9 +54,6 @@ class View{
 function getElem(id)
 		{
 			return document.getElementById(id);
-		}
-function getFieldValue(view){
-			return view.idField.value;
 		}		
 /*END HELPERS.JS********************************/
 
@@ -72,10 +69,10 @@ class Controller{
 			var task = new Task(fieldValue);
 			taskCollection.addTask(task);
 			console.log(taskCollection);
-		     }
-		this.view.idButtonDis.onclick = function(){
-			/*console.log(taskCollection);*/}     
 		}
+		this.view.idButtonDis.onclick = function(){
+		}     
+	}
 }
 
 /*END CONTROLLER.JS*****************************/
@@ -90,8 +87,6 @@ class Application{
 		this.controller = new Controller(this.view,this.taskCollection);
 	}
 }
-
-
 
 window.onload = function(){
 var application = new Application();
