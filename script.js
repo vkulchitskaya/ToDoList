@@ -28,7 +28,7 @@ class TaskCollection{
 		return this.taskCollection;
 	}
 }
-/*END MODEL.JS******************************************/
+/*END MODEL.JS*******************************************/
 
 
 
