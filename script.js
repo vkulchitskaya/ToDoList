@@ -14,8 +14,9 @@ class TaskCollection{
 	constructor() {
 		this.taskCollection = [];
 	}
-	addTask(task){
-		this.taskCollection.push(task); 
+	addTask(test){
+		this.taskCollection.push(task);
+		console.log(this.taskCollection); 
 	}
 	removeTask(task) {
 		this.removeTaskByName(task.name);
@@ -35,14 +36,21 @@ class TaskCollection{
 /*VIEW.JS***********************************************/
 class View{
 	
-	constructor(idField,idButton,idButtonDis,idUl/*,taskCollection*/){
-		this.idField=getElem(idField);
-		this.idButton=getElem(idButton);
-		this.idButtonDis=getElem(idButtonDis);
-		this.idFieldValue=getElem(idField).value;
-		this.idUl=getElem(idUl);	
+	constructor(idField,idButton,idButtonDis,idUl){
+		this.idButton=qs(idButton);
 		this.StrIdField=idField;
+		self=this;
+		self.idButton.onclick = function test(){			
+			self.fieldValue = qs(self.StrIdField).value;
+			self.onKeyPressed();
 		}
+
+		}
+
+		bindButtonPressed (handler){
+			this.onKeyPressed = handler;
+		}
+
 		
 		
 }
@@ -51,7 +59,7 @@ class View{
 
 /*HELPERS.JS***********************************/
 
-function getElem(id)
+function qs(id)
 		{
 			return document.getElementById(id);
 		}		
@@ -63,16 +71,15 @@ class Controller{
 	constructor(view,taskCollection){
 		this.view = view;
 		this.taskCollection = taskCollection;
-		this.view.idButton.onclick = function(){
-			self=this
-			var fieldValue = getElem(view.StrIdField).value;
-			var task = new Task(fieldValue);
-			taskCollection.addTask(task);
-			console.log(taskCollection);
-		}
-		this.view.idButtonDis.onclick = function(){
-		}     
+		this.view.bindButtonPressed(this.onKeyPressed);
+
 	}
+
+	onKeyPressed(){
+		alert('Контроллер считал нажатие кнопки!');
+
+	}
+
 }
 
 /*END CONTROLLER.JS*****************************/
@@ -85,7 +92,9 @@ class Application{
 		this.taskCollection = new TaskCollection();
 		this.view = new View('taskTittle','addButton','displayButton','listTask');
 		this.controller = new Controller(this.view,this.taskCollection);
+
 	}
+
 }
 
 window.onload = function(){
