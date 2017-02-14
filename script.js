@@ -40,8 +40,7 @@ class View{
 		this.idButton=qs(idButton);
 		this.StrIdField=idField;
 		self=this;
-		self.idButton.onclick = function test(){			
-			self.fieldValue = qs(self.StrIdField).value;
+		self.idButton.onclick = function (){			
 			self.onKeyPressed();
 		}
 
@@ -49,6 +48,9 @@ class View{
 
 		bindButtonPressed (handler){
 			this.onKeyPressed = handler;
+		}
+		getValue(){
+			return qs(this.StrIdField).value;
 		}
 
 		
@@ -72,11 +74,15 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed);
-
+		self=this;
+		/*console.log(self.view);*/
 	}
 
 	onKeyPressed(){
-		alert('Контроллер считал нажатие кнопки!');
+		self=this;		
+		var task = new Task (self.view.getValue());
+		self.taskCollection.taskCollection.push(task);
+		console.log(self.taskCollection);		
 
 	}
 
@@ -99,7 +105,7 @@ class Application{
 
 window.onload = function(){
 var application = new Application();
-console.log(application);
+/*console.log(application);*/
 };
 
 /*********************************************/
