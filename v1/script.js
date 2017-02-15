@@ -54,23 +54,38 @@ class View{
 	
 	constructor(idField,idButton,idButtonDis,idUl){
 		this.idButton=qs(idButton);
+		this.idButtonDis=qs(idButtonDis);
 		this.idField=qs(idField);
+		this.idUl= qs(idUl);
 		self=this;
 		this.idButton.onclick = function (){			
 			self.onKeyPressed();
 		}
-
+		/*this.idButtonDis.onclick= function (taskCollection){
+			self.onKeyDisPressed();
+		}*/
 		}
-
 		bindButtonPressed (handler){
 			this.onKeyPressed = handler;
 		}
+		/*bindButtonDisPressed (handler){
+			this.onKeyDisPressed = handler;
+		}*/
 		getValue(){
 			return this.idField.value;
 		}
+		/*display(taskCollection){
+	    	var tasks = taskCollection.getTasks();
+	    	self = this
+ 	    	tasks.forEach(function (item) {
+				var newLi = document.createElement('li');
+   				newLi.innerHTML =item.name;
+   				self.idUl.appendChild(newLi);
 
-		
-		
+		});		
+		}*/
+    	  
+
 }
 /* END VIEW.JS**********************************/
 
@@ -90,16 +105,29 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed);
-		self=this;/*что за бред*/	
+		/*this.view.bindButtonDisPressed(this.onKeyDisPressed);*/
+		self=this;/*проблемная строка*/	
 	}
 
 	onKeyPressed(){	
+		console.log(this.taskCollection);
 		var task = new Task (this.view.getValue());
 		this.taskCollection.addTask(task);
 		var commitTaskCollection = JSON.stringify(this.taskCollection);
 		localStorage.setItem('collection', commitTaskCollection);
 		
+		
 	}
+	/*onKeyDisPressed(){
+		var elem = this.view.idUl;
+		while (elem.firstChild) {
+    	elem.removeChild(elem.firstChild);
+		}
+		
+		this.view.display(this.taskCollection);	
+		/*console.log(this.view); на месте
+
+	}*/
 
 }
 
@@ -120,7 +148,7 @@ class Application{
 
 window.onload = function(){
 var application = new Application();
-console.log(application.taskCollection);
+/*console.log(application.taskCollection);*/
 };
 
 /*********************************************/
