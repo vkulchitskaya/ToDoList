@@ -3,8 +3,8 @@ class View{
 	constructor(idField,idButton,idButtonDis,idUl){
 		this.idButton=qs(idButton);
 		this.StrIdField=idField;
-		self=this;
-		self.idButton.onclick = function (){			
+		this=self;
+		this.idButton.onclick = function (){			
 			self.onKeyPressed();
 		}
 

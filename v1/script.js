@@ -13,17 +13,33 @@ class TaskCollection{
 
 	constructor() {
 		this.taskCollection = [];
+		self=this;
+		var existCollection = localStorage.getItem("collection");
+		if (existCollection!=null || existCollection!=undefined){
+			var reCollection = JSON.parse(existCollection);
+			reCollection.taskCollection.forEach( function(item){
+				var oldTask = new Task(item.name);	
+		 		self.taskCollection.push(oldTask);
+			} );
+		}
 	}
-	addTask(test){
+	addTask(task){
 		this.taskCollection.push(task);
 		console.log(this.taskCollection); 
 	}
 	removeTask(task) {
 		this.removeTaskByName(task.name);
 	}
-	removeTaskByName(name) {
-		var i = this.taskCollection.indexOf(name)
-		this.taskCollection.splice(i, 1); // начиная с позиции 1, удалить 1 элемент
+	removeTaskByName(name) {			
+		var i = this.taskCollection.indexOf(name);
+		if (i != -1){
+			this.taskCollection.splice(i, 1);
+		}
+		else
+		{
+			alert('Задача не найдена :(');
+		}
+		/* // начиная с позиции 1, удалить 1 элемент*/
 	}
 	getTasks() {
 		return this.taskCollection;
@@ -38,9 +54,9 @@ class View{
 	
 	constructor(idField,idButton,idButtonDis,idUl){
 		this.idButton=qs(idButton);
-		this.StrIdField=idField;
+		this.idField=qs(idField);
 		self=this;
-		self.idButton.onclick = function (){			
+		this.idButton.onclick = function (){			
 			self.onKeyPressed();
 		}
 
@@ -50,7 +66,7 @@ class View{
 			this.onKeyPressed = handler;
 		}
 		getValue(){
-			return qs(this.StrIdField).value;
+			return this.idField.value;
 		}
 
 		
@@ -74,16 +90,15 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed);
-		self=this;
-		/*console.log(self.view);*/
+		self=this;/*что за бред*/	
 	}
 
-	onKeyPressed(){
-		self=this;		
-		var task = new Task (self.view.getValue());
-		self.taskCollection.taskCollection.push(task);
-		console.log(self.taskCollection);		
-
+	onKeyPressed(){	
+		var task = new Task (this.view.getValue());
+		this.taskCollection.addTask(task);
+		var commitTaskCollection = JSON.stringify(this.taskCollection);
+		localStorage.setItem('collection', commitTaskCollection);
+		
 	}
 
 }
@@ -105,7 +120,7 @@ class Application{
 
 window.onload = function(){
 var application = new Application();
-/*console.log(application);*/
+console.log(application.taskCollection);
 };
 
 /*********************************************/

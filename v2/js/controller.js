@@ -3,15 +3,12 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed);
-		self=this;
-		/*console.log(self.view);*/
 	}
 
-	onKeyPressed(){
-		self=this;		
-		var task = new Task (self.view.getValue());
-		self.taskCollection.taskCollection.push(task);
-		console.log(self.taskCollection);		
+	onKeyPressed(){		
+		var task = new Task (this.view.getValue());
+		this.taskCollection.taskCollection.push(task);
+		console.log(this.taskCollection);		
 
 	}
 
