@@ -17,16 +17,18 @@ class TaskCollection{
 		var existCollection = localStorage.getItem("collection");
 		if (existCollection!=null || existCollection!=undefined){
 			var reCollection = JSON.parse(existCollection);
-			reCollection.taskCollection.forEach( function(item){
+			console.log(reCollection);
+			reCollection.forEach( function(item){
 				var oldTask = new Task(item.name);	
 		 		self.taskCollection.push(oldTask);
 			} );
 		}
 	}
 	addTask(task){
-		this.taskCollection.push(task);
-		console.log(this.taskCollection); 
+		this.taskCollection.push(task);		
+		console.log(this.taskCollection);
 	}
+
 	removeTask(task) {
 		this.removeTaskByName(task.name);
 	}
@@ -43,6 +45,11 @@ class TaskCollection{
 	}
 	getTasks() {
 		return this.taskCollection;
+	}
+
+	rewrite(){
+		var commitTaskCollection = JSON.stringify(this.taskCollection);
+		localStorage.setItem('collection', commitTaskCollection);
 	}
 }
 /*END MODEL.JS*******************************************/
@@ -104,17 +111,14 @@ class Controller{
 	constructor(view,taskCollection){
 		this.view = view;
 		this.taskCollection = taskCollection;
-		this.view.bindButtonPressed(this.onKeyPressed);
+		this.view.bindButtonPressed(this.onKeyPressed.bind(this));
 		/*this.view.bindButtonDisPressed(this.onKeyDisPressed);*/
-		self=this;/*проблемная строка*/	
 	}
 
 	onKeyPressed(){	
-		console.log(this.taskCollection);
 		var task = new Task (this.view.getValue());
 		this.taskCollection.addTask(task);
-		var commitTaskCollection = JSON.stringify(this.taskCollection);
-		localStorage.setItem('collection', commitTaskCollection);
+		this.taskCollection.rewrite();
 		
 		
 	}
@@ -147,8 +151,10 @@ class Application{
 }
 
 window.onload = function(){
+/*localStorage.clear();*/
 var application = new Application();
-/*console.log(application.taskCollection);*/
+console.log(application.taskCollection);
+
 };
 
 /*********************************************/
