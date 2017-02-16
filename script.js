@@ -17,7 +17,6 @@ class TaskCollection{
 		var existCollection = localStorage.getItem("collection");
 		if (existCollection!=null || existCollection!=undefined){
 			var reCollection = JSON.parse(existCollection);
-			console.log(reCollection);
 			reCollection.forEach( function(item){
 				var oldTask = new Task(item.name);	
 		 		self.taskCollection.push(oldTask);
@@ -26,7 +25,6 @@ class TaskCollection{
 	}
 	addTask(task){
 		this.taskCollection.push(task);		
-		console.log(this.taskCollection);
 	}
 
 	removeTask(task) {
@@ -68,20 +66,20 @@ class View{
 		this.idButton.onclick = function (){			
 			self.onKeyPressed();
 		}
-		/*this.idButtonDis.onclick= function (taskCollection){
+		this.idButtonDis.onclick= function (taskCollection){
 			self.onKeyDisPressed();
-		}*/
+		}
 		}
 		bindButtonPressed (handler){
 			this.onKeyPressed = handler;
 		}
-		/*bindButtonDisPressed (handler){
+		bindButtonDisPressed (handler){
 			this.onKeyDisPressed = handler;
-		}*/
+		}
 		getValue(){
 			return this.idField.value;
 		}
-		/*display(taskCollection){
+		display(taskCollection){
 	    	var tasks = taskCollection.getTasks();
 	    	self = this
  	    	tasks.forEach(function (item) {
@@ -90,7 +88,7 @@ class View{
    				self.idUl.appendChild(newLi);
 
 		});		
-		}*/
+		}
     	  
 
 }
@@ -112,7 +110,7 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed.bind(this));
-		/*this.view.bindButtonDisPressed(this.onKeyDisPressed);*/
+		this.view.bindButtonDisPressed(this.onKeyDisPressed.bind(this));
 	}
 
 	onKeyPressed(){	
@@ -122,16 +120,16 @@ class Controller{
 		
 		
 	}
-	/*onKeyDisPressed(){
+	onKeyDisPressed(){
 		var elem = this.view.idUl;
 		while (elem.firstChild) {
     	elem.removeChild(elem.firstChild);
 		}
 		
 		this.view.display(this.taskCollection);	
-		/*console.log(this.view); на месте
+		/*console.log(this.view); */
 
-	}*/
+	}
 
 }
 
