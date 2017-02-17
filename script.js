@@ -100,7 +100,12 @@ class View{
 function qs(id)
 		{
 			return document.getElementById(id);
-		}		
+		}
+
+function qt(tag)
+		{
+			return document.getElementsByTagName(tag);;
+		}				
 /*END HELPERS.JS********************************/
 
 
@@ -117,6 +122,7 @@ class Controller{
 		var task = new Task (this.view.getValue());
 		this.taskCollection.addTask(task);
 		this.taskCollection.rewrite();
+		this.view.onKeyDisPressed();
 		
 		
 	}
@@ -127,7 +133,6 @@ class Controller{
 		}
 		
 		this.view.display(this.taskCollection);	
-		/*console.log(this.view); */
 
 	}
 
@@ -151,8 +156,17 @@ class Application{
 window.onload = function(){
 /*localStorage.clear();*/
 var application = new Application();
+application.view.onKeyDisPressed();
 console.log(application.taskCollection);
+var elements =  qt('li');
+    console.log(elements);
+/*document.getElementById("myLi").value = "200"*/
 
-};
+
+var newArray = elements.filter( function(item){ 
+	return item.textContent=="Title...sdsdfs"; } );
+	console.log(newArray);
+
+}
 
 /*********************************************/
