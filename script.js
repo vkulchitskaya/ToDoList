@@ -33,16 +33,14 @@ class TaskCollection{
 	removeTask(task) {
 		this.removeTaskByName(task.name);
 	}
-	removeTaskByName(name) {			
-		var i = this.taskCollection.indexOf(name);
-		if (i != -1){
-			this.taskCollection.splice(i, 1);
-		}
-		else
-		{
-			alert('Задача не найдена :(');
-		}
-
+	removeTaskById(Id) {
+		var i;
+		this.taskCollection.forEach(function(item,index){
+					if (item.Id	== Id){
+						i= index;
+					}
+		}	);
+		this.taskCollection.splice(i, 1);
 	}
 	getTasks() {
 		return this.taskCollection;
@@ -68,10 +66,11 @@ class TaskCollection{
 /*VIEW.JS***********************************************/
 class View{
 	
-	constructor(idField,idButton,idButtonDis,idUl){
+	constructor(idField,idButton,idButtonDis,idButtonRemove,idUl){
+		this.idField=qs(idField);
 		this.idButton=qs(idButton);
 		this.idButtonDis=qs(idButtonDis);
-		this.idField=qs(idField);
+		this.idButtonRemove=qs(idButtonRemove);
 		this.idUl= qs(idUl);
 		self=this;
 		this.idButton.onclick = function (){			
@@ -79,6 +78,9 @@ class View{
 		}
 		this.idButtonDis.onclick= function (taskCollection){
 			self.onKeyDisPressed();
+		}
+		this.idButtonRemove.onclick= function (){
+			self.onKeyRemovePressed();
 		}
 	
 		}
@@ -89,10 +91,17 @@ class View{
 		bindButtonDisPressed (handler){
 			this.onKeyDisPressed = handler;
 		}
+		bindButtonRemovePressed (handler){
+			this.onKeyRemovePressed = handler;
+		}
 		getValue(){
 			return this.idField.value;
 		}
 		display(taskCollection){
+			var elem = this.idUl;
+			while (elem.firstChild) {
+    			elem.removeChild(elem.firstChild);
+			}
 	    	var tasks = taskCollection.getTasks();
 	    	self = this
  	    	tasks.forEach(function (item) {
@@ -133,6 +142,7 @@ class Controller{
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed.bind(this));
 		this.view.bindButtonDisPressed(this.onKeyDisPressed.bind(this));
+		this.view.bindButtonRemovePressed(this.onKeyRemovePressed.bind(this));
 	}
 
 
@@ -147,18 +157,21 @@ class Controller{
 		
 	}
 	onKeyDisPressed(){
-		var elem = this.view.idUl;
-		while (elem.firstChild) {
-    	elem.removeChild(elem.firstChild);
-		}
-		
+		this.taskCollection.refreshIdTask();
 		this.view.display(this.taskCollection);	
 
+	}
 
+	onKeyRemovePressed(){
+		this.taskCollection.removeTaskById("data-1");			
+		this.taskCollection.refreshIdTask();
+		this.view.display(this.taskCollection);	
 
 	}
 
 }
+
+
 
 /*END CONTROLLER.JS*****************************/
 
@@ -168,7 +181,7 @@ class Controller{
 class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
-		this.view = new View('taskTittle','addButton','displayButton','listTask');
+		this.view = new View('taskTittle','addButton','displayButton','removeButton','listTask');
 		this.controller = new Controller(this.view,this.taskCollection);
 
 	}
