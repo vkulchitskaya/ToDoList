@@ -55,7 +55,7 @@ class TaskCollection{
 	refreshIdTask(){
 		this.taskCollection.forEach(function(item,index)
 			{
-				item.Id=index;
+				item.Id='data-'+index;
 				/*console.log(item.Id);*/
 
 			});
@@ -97,6 +97,8 @@ class View{
 	    	self = this
  	    	tasks.forEach(function (item) {
 				var newLi = document.createElement('li');
+				newLi.id = item.Id
+				console.log(newLi);
    				newLi.innerHTML =item.name;
    				self.idUl.appendChild(newLi);
 
