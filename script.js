@@ -52,13 +52,14 @@ class TaskCollection{
 		var commitTaskCollection = JSON.stringify(this.taskCollection);
 		localStorage.setItem('collection', commitTaskCollection);
 	}
-	/*refreshIdTask(){
-		this.TaskCollection.forEach(function(item,index)
+	refreshIdTask(){
+		this.taskCollection.forEach(function(item,index)
 			{
 				item.Id=index;
+				/*console.log(item.Id);*/
 
 			});
-	}*/
+	}
 }
 /*END MODEL.JS*******************************************/
 
@@ -137,7 +138,7 @@ class Controller{
 	onKeyPressed(){	
 		var task = new Task (this.view.getValue());
 		this.taskCollection.addTask(task);
-		/*this.taskCollection.refreshIdTask();*/
+		this.taskCollection.refreshIdTask();
 		this.taskCollection.rewrite();
 		this.view.onKeyDisPressed();
 		
@@ -176,6 +177,7 @@ window.onload = function(){
 /*localStorage.clear();*/
 var application = new Application();
 application.view.onKeyDisPressed();
+application.taskCollection.refreshIdTask();
 console.log(application.taskCollection);
 
 
