@@ -2,7 +2,9 @@
 
 class Task {
   constructor(name) {
+    var date = new Date();
     this.name = name;
+    this.Id=0;
   } 
   writeTask() {
     alert(this.name);
@@ -22,9 +24,10 @@ class TaskCollection{
 		 		self.taskCollection.push(oldTask);
 			} );
 		}
+	
 	}
 	addTask(task){
-		this.taskCollection.push(task);		
+		this.taskCollection.push(task);
 	}
 
 	removeTask(task) {
@@ -39,7 +42,7 @@ class TaskCollection{
 		{
 			alert('Задача не найдена :(');
 		}
-		/* // начиная с позиции 1, удалить 1 элемент*/
+
 	}
 	getTasks() {
 		return this.taskCollection;
@@ -48,6 +51,13 @@ class TaskCollection{
 	rewrite(){
 		var commitTaskCollection = JSON.stringify(this.taskCollection);
 		localStorage.setItem('collection', commitTaskCollection);
+	}
+	refreshIdTask(){
+		this.TaskCollection.forEach(function(item,index)
+			{
+				item.Id=index;
+
+			});
 	}
 }
 /*END MODEL.JS*******************************************/
@@ -69,7 +79,9 @@ class View{
 		this.idButtonDis.onclick= function (taskCollection){
 			self.onKeyDisPressed();
 		}
+	
 		}
+
 		bindButtonPressed (handler){
 			this.onKeyPressed = handler;
 		}
@@ -87,11 +99,13 @@ class View{
    				newLi.innerHTML =item.name;
    				self.idUl.appendChild(newLi);
 
-		});		
+		});
+
 		}
+
+ 	    }	
     	  
 
-}
 /* END VIEW.JS**********************************/
 
 
@@ -104,7 +118,7 @@ function qs(id)
 
 function qt(tag)
 		{
-			return document.getElementsByTagName(tag);;
+			return document.getElementsByTagName(tag);
 		}				
 /*END HELPERS.JS********************************/
 
@@ -118,9 +132,12 @@ class Controller{
 		this.view.bindButtonDisPressed(this.onKeyDisPressed.bind(this));
 	}
 
+
+	
 	onKeyPressed(){	
 		var task = new Task (this.view.getValue());
 		this.taskCollection.addTask(task);
+		this.taskCollection.refreshIdTask();
 		this.taskCollection.rewrite();
 		this.view.onKeyDisPressed();
 		
@@ -133,6 +150,8 @@ class Controller{
 		}
 		
 		this.view.display(this.taskCollection);	
+
+
 
 	}
 
@@ -154,18 +173,11 @@ class Application{
 }
 
 window.onload = function(){
-/*localStorage.clear();*/
+localStorage.clear();
 var application = new Application();
 application.view.onKeyDisPressed();
 console.log(application.taskCollection);
-var elements =  qt('li');
-    console.log(elements);
-/*document.getElementById("myLi").value = "200"*/
 
-
-var newArray = elements.filter( function(item){ 
-	return item.textContent=="Title...sdsdfs"; } );
-	console.log(newArray);
 
 }
 
