@@ -58,22 +58,14 @@ class TaskCollection{
 /*VIEW.JS***********************************************/
 class View{
 	
-	constructor(idField,idButton,idButtonDis,idButtonRemove,idUl,idButtonClear){
+	constructor(idField,idButton,idUl,idButtonClear){
 		this.idField=qs(idField);
 		this.idButton=qs(idButton);
-		this.idButtonDis=qs(idButtonDis);
-		this.idButtonRemove=qs(idButtonRemove);
 		this.idUl= qs(idUl);
 		this.idButtonClear=qs(idButtonClear);
 		self=this;
 		this.idButton.onclick = function (){			
 			self.onKeyPressed();
-		}
-		this.idButtonDis.onclick= function (taskCollection){
-			self.onKeyDisPressed();
-		}
-		this.idButtonRemove.onclick= function (){
-			self.onKeyRemovePressed();
 		}
 		this.idButtonClear.onclick= function (){
 			localStorage.clear();
@@ -85,10 +77,10 @@ class View{
 		bindButtonPressed (handler){
 			this.onKeyPressed = handler;
 		}
-		bindButtonDisPressed (handler){
+		bindDisPressed (handler){
 			this.onKeyDisPressed = handler;
 		}
-		bindButtonRemovePressed (handler){
+		bindRemovePressed (handler){
 			this.onKeyRemovePressed = handler;
 		}
 		getValue(){
@@ -121,7 +113,6 @@ class View{
   							var parentLi = this.parentElement;
   							var idTask = parentLi.getAttribute('data-id');
   							alert('Удаляем задачу под номером...'+idTask);
-  							/*здесь вызываем функцию удаления по id*/
   							self.onKeyRemovePressed(idTask);
   						}
   						nodeList[i].appendChild(newSpan);
@@ -155,8 +146,8 @@ class Controller{
 		this.view = view;
 		this.taskCollection = taskCollection;
 		this.view.bindButtonPressed(this.onKeyPressed.bind(this));
-		this.view.bindButtonDisPressed(this.onKeyDisPressed.bind(this));
-		this.view.bindButtonRemovePressed(this.onKeyRemovePressed.bind(this));
+		this.view.bindDisPressed(this.onKeyDisPressed.bind(this));
+		this.view.bindRemovePressed(this.onKeyRemovePressed.bind(this));
 	}
 
 
@@ -166,7 +157,6 @@ class Controller{
 		var name = this.view.getValue();
 		var id = this.taskCollection.index;
 		console.log(id);
-		/*--------------------------------------------------------------------*/
 		var task = new Task (name,id);
 		this.taskCollection.addTask(task);
 		this.taskCollection.rewrite();
@@ -198,7 +188,7 @@ class Controller{
 class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
-		this.view = new View('taskTittle','addButton','displayButton','removeButton','listTask','clearButton');
+		this.view = new View('taskTittle','addButton','listTask','clearButton');
 		this.controller = new Controller(this.view,this.taskCollection);
 
 	}
@@ -206,11 +196,9 @@ class Application{
 }
 
 window.onload = function(){
-/*localStorage.clear();*/
 var application = new Application();
 application.view.onKeyDisPressed();
 console.log(application.taskCollection);
-
 
 }
 
