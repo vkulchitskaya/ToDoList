@@ -101,6 +101,13 @@ class View{
 				newLi.setAttribute('data-id', item.id);
 				console.log(newLi);
    				newLi.innerHTML =item.name;
+   				/*newLi.dbclick = function(){
+   					var tmpId = this.getAttribute('data-id');
+   					var tmpText = this.textContent;
+   					var edit = document.createElement("input");
+   					edit.setAttribute('value', tmpText);
+   					this.appendChild(edit);
+   				}*/		
    				self.idUl.appendChild(newLi);
 
 		});
