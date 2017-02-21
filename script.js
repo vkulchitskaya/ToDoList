@@ -1,46 +1,41 @@
 /*MODEL.JS***********************************/
 
 class Task {
-  constructor(name) {
-    var date = new Date();
+  constructor(name,id) {
     this.name = name;
-    this.Id=0;
+    this.id=id;
   } 
-  writeTask() {
-    alert(this.name);
-  }
 }
 
 class TaskCollection{
 
 	constructor() {
 		this.taskCollection = [];
+		this.index =1000;
 		self=this;
 		var existCollection = localStorage.getItem("collection");
+		var existIndex = localStorage.getItem("collection-index");
 		if (existCollection!=null || existCollection!=undefined){
 			var reCollection = JSON.parse(existCollection);
+			var reIndex = JSON.parse(existIndex);
 			reCollection.forEach( function(item){
-				var oldTask = new Task(item.name);	
+				var oldTask = new Task(item.name,item.id);	
 		 		self.taskCollection.push(oldTask);
+		 		self.index =reIndex;
 			} );
 		}
 	
 	}
 	addTask(task){
 		this.taskCollection.push(task);
+
 	}
 
 	removeTask(task) {
 		this.removeTaskByName(task.name);
 	}
-	removeTaskById(Id) {
-		var i;
-		this.taskCollection.forEach(function(item,index){
-					if (item.Id	== Id){
-						i= index;
-					}
-		}	);
-		this.taskCollection.splice(i, 1);
+	removeTaskById(id) {	
+		this.taskCollection = this.taskCollection.filter(function(v){return	v.id !=id});
 	}
 	getTasks() {
 		return this.taskCollection;
@@ -48,15 +43,12 @@ class TaskCollection{
 
 	rewrite(){
 		var commitTaskCollection = JSON.stringify(this.taskCollection);
+		var commitIndexCollection = JSON.stringify(this.index);
 		localStorage.setItem('collection', commitTaskCollection);
+		localStorage.setItem('collection-index', commitIndexCollection);
 	}
-	refreshIdTask(){
-		this.taskCollection.forEach(function(item,index)
-			{
-				item.Id='data-'+index;
-				/*console.log(item.Id);*/
-
-			});
+	incIndex(){
+		this.index++;
 	}
 }
 /*END MODEL.JS*******************************************/
@@ -66,12 +58,13 @@ class TaskCollection{
 /*VIEW.JS***********************************************/
 class View{
 	
-	constructor(idField,idButton,idButtonDis,idButtonRemove,idUl){
+	constructor(idField,idButton,idButtonDis,idButtonRemove,idUl,idButtonClear){
 		this.idField=qs(idField);
 		this.idButton=qs(idButton);
 		this.idButtonDis=qs(idButtonDis);
 		this.idButtonRemove=qs(idButtonRemove);
 		this.idUl= qs(idUl);
+		this.idButtonClear=qs(idButtonClear);
 		self=this;
 		this.idButton.onclick = function (){			
 			self.onKeyPressed();
@@ -81,6 +74,10 @@ class View{
 		}
 		this.idButtonRemove.onclick= function (){
 			self.onKeyRemovePressed();
+		}
+		this.idButtonClear.onclick= function (){
+			localStorage.clear();
+
 		}
 	
 		}
@@ -103,15 +100,32 @@ class View{
     			elem.removeChild(elem.firstChild);
 			}
 	    	var tasks = taskCollection.getTasks();
+
 	    	self = this
  	    	tasks.forEach(function (item) {
 				var newLi = document.createElement('li');
-				newLi.id = item.Id
+				newLi.setAttribute('data-id', item.id);
 				console.log(newLi);
    				newLi.innerHTML =item.name;
    				self.idUl.appendChild(newLi);
 
 		});
+
+				var nodeList = document.getElementsByTagName("li");
+				console.log(nodeList);
+				for (var i = 0; i < nodeList.length; i++) {
+  						var newSpan = document.createElement("span");
+  						var txt = document.createTextNode("\u00D7");
+  						newSpan.appendChild(txt);
+  						newSpan.onclick	=  function	(){
+  							var parentLi = this.parentElement;
+  							var idTask = parentLi.getAttribute('data-id');
+  							alert('Удаляем задачу под номером...'+idTask);
+  							/*здесь вызываем функцию удаления по id*/
+  							self.onKeyRemovePressed(idTask);
+  						}
+  						nodeList[i].appendChild(newSpan);
+				}
 
 		}
 
@@ -147,24 +161,27 @@ class Controller{
 
 
 	
-	onKeyPressed(){	
-		var task = new Task (this.view.getValue());
+	onKeyPressed(){
+		this.taskCollection.incIndex();
+		var name = this.view.getValue();
+		var id = this.taskCollection.index;
+		console.log(id);
+		/*--------------------------------------------------------------------*/
+		var task = new Task (name,id);
 		this.taskCollection.addTask(task);
-		this.taskCollection.refreshIdTask();
 		this.taskCollection.rewrite();
 		this.view.onKeyDisPressed();
 		
 		
 	}
 	onKeyDisPressed(){
-		this.taskCollection.refreshIdTask();
 		this.view.display(this.taskCollection);	
 
 	}
 
-	onKeyRemovePressed(){
-		this.taskCollection.removeTaskById("data-1");			
-		this.taskCollection.refreshIdTask();
+	onKeyRemovePressed(id){
+		this.taskCollection.removeTaskById(id);
+		this.taskCollection.rewrite();			
 		this.view.display(this.taskCollection);	
 
 	}
@@ -181,7 +198,7 @@ class Controller{
 class Application{
 	constructor(){
 		this.taskCollection = new TaskCollection();
-		this.view = new View('taskTittle','addButton','displayButton','removeButton','listTask');
+		this.view = new View('taskTittle','addButton','displayButton','removeButton','listTask','clearButton');
 		this.controller = new Controller(this.view,this.taskCollection);
 
 	}
@@ -192,7 +209,6 @@ window.onload = function(){
 /*localStorage.clear();*/
 var application = new Application();
 application.view.onKeyDisPressed();
-application.taskCollection.refreshIdTask();
 console.log(application.taskCollection);
 
 
