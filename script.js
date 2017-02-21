@@ -69,6 +69,8 @@ class View{
 		}
 		this.idButtonClear.onclick= function (){
 			localStorage.clear();
+			location.reload();
+
 
 		}
 	
